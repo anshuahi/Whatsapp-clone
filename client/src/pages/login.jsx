@@ -3,6 +3,8 @@ import Image from 'next/image'
 import { FcGoogle } from 'react-icons/fc';
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { firebaseAuth } from '@/utils/FirebaseConfig';
+import axios from 'axios';
+import { CHECK_USER_ROUTE } from '@/utils/ApiRoutes';
 
 const login = () => {
 
@@ -14,7 +16,8 @@ const login = () => {
     console.log(name,email,photoURL);
     try {
       if(email){
-        
+        const {data} = await axios.post(CHECK_USER_ROUTE, {email});
+        console.log(data);
       }
     } catch (error) {
         console.log(error);
