@@ -2,9 +2,9 @@ import React from 'react'
 
 const index = () => {
   return (
-    <div>
-      Index
-    </div>
+    <h1 className="text-3xl font-light underline">
+      Hello worrrld!
+    </h1>
   )
 }
 
