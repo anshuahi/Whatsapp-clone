@@ -6,21 +6,36 @@ import { firebaseAuth } from '@/utils/FirebaseConfig';
 import axios from 'axios';
 import { CHECK_USER_ROUTE } from '@/utils/ApiRoutes';
 import { useRouter } from 'next/router';
+import { useStateProvider } from '@/context/StateContext';
+import { reducerCases } from '@/context/constants';
 
 const login = () => {
 
   const router = useRouter();
+
+  const [{}, dispatch] = useStateProvider();
+
   const handlelogin = async () => {
     const provider = new GoogleAuthProvider();
     // const { user } = await signInWithPopup(firebaseAuth, provider);
-    const { user : {displayName:name,email,photoURL} } = await signInWithPopup(firebaseAuth, provider);
+    const { user : {displayName:name,email,photoURL: profileImage} } = await signInWithPopup(firebaseAuth, provider);
     // console.log(user);
-    console.log(name,email,photoURL);
+    console.log(name,email,'profileImage', profileImage);
     try {
       if(email){
         const {data} = await axios.post(CHECK_USER_ROUTE, {email});
         console.log(data);
         if(! data.status){
+          dispatch({
+            type: reducerCases.SET_NEW_USER,
+            newUser: true
+          });
+          dispatch({
+            type: reducerCases.SET_USER_INFO,
+            userInfo: {
+              name, email, profileImage, status: "",
+            }
+          })
           router.push("/onboarding");
         }
       }
