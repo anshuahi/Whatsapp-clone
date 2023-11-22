@@ -1,3 +1,4 @@
+import Avatar from '@/component/common/Avatar';
 import Input from '@/component/common/input';
 import { useStateProvider } from '@/context/StateContext'
 import Image from 'next/image'
@@ -24,7 +25,8 @@ const onboarding = () => {
             <Input name ="About" state={about} setState={setAbout} label/>
         </div>
         <div>
-          <Image src={image} alt='whatsapp' height={300} width={300}/>
+          <Avatar type="xl" image = {image} setImage={setImage} />
+          {/* <Image src={image} alt='whatsapp' height={300} width={300}/> */}
         </div>
       </div>
     </div>
